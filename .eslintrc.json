@@ -45,8 +45,13 @@
     ]
   },
   "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
     }
   }
 }
