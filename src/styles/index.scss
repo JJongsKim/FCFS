@@ -1,0 +1,34 @@
+@import './GlobalColor.scss';
+@import './GlobalFont.scss';
+
+* {
+  box-sizing: border-box;
+  font-family: 'NanumSquare', 'welcomeBold', 'sans-serif';
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: #ededed;
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}

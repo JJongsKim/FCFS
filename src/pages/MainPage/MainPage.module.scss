@@ -1,0 +1,7 @@
+@use '../../styles/GlobalColor.scss' as color;
+
+.mainPageWrap {
+  background-color: color.$WHITE;
+  width: 375px;
+  height: 100%;
+}
