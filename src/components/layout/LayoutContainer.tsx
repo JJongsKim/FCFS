@@ -10,7 +10,7 @@ const LayoutContainer = ({ children }: Props) => {
   return (
     <div className={styles.layoutContainerWrap}>
       <NavBar />
-      {children}
+      <div className={styles.contentsContainer}>{children}</div>
     </div>
   );
 };
