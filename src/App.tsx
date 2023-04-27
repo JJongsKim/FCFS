@@ -1,9 +1,12 @@
+import Layout from './components/layout';
 import MainPage from './pages/MainPage';
 
 function App() {
   return (
     <div className="App">
-      <MainPage />
+      <Layout>
+        <MainPage />
+      </Layout>
     </div>
   );
 }

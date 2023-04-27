@@ -1,0 +1,11 @@
+@use '../../../styles/GlobalColor.scss' as color;
+
+.navBarWrap {
+  position: fixed;
+  width: 375px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  padding: 13px 20px;
+  background-color: color.$WHITE_GRAY;
+}

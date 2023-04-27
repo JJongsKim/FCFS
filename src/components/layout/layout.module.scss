@@ -1,0 +1,10 @@
+@use '../../styles/GlobalColor.scss' as color;
+
+.layoutWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 375px;
+  height: 100vh;
+  background-color: color.$WHITE_GRAY;
+}
