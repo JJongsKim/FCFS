@@ -1,0 +1,31 @@
+@use '../../../styles/GlobalColor.scss' as color;
+
+$babyGray: color.$BABY_GRAY;
+$blue: color.$BLUE;
+
+.buttonWrap {
+  border-radius: 15px;
+  box-shadow: 0 4px 3px rgba(0, 0, 0, 0.25);
+  font-weight: 600;
+
+  &.blue {
+    background-color: $blue;
+    color: $babyGray;
+  }
+
+  &.babyGray {
+    background-color: $babyGray;
+  }
+
+  &.small {
+    width: 100px;
+    height: 35px;
+    font-size: 13px;
+  }
+
+  &.large {
+    width: 120px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
