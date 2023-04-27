@@ -1,0 +1,28 @@
+@import '../../../styles/GlobalFont.scss';
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &.small {
+    p {
+      font-family: 'welcomeBold';
+      font-size: 16px;
+      padding-left: 5px;
+    }
+  }
+
+  &.large {
+    img {
+      width: 40px;
+      height: 45px;
+    }
+
+    p {
+      font-family: 'welcomeBold';
+      font-size: 25px;
+      padding-left: 5px;
+    }
+  }
+}

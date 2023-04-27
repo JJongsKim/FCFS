@@ -1,0 +1,12 @@
+@use '../../styles/GlobalColor.scss' as color;
+
+.layoutContainerWrap {
+  position: relative;
+  width: 100%;
+  height: 677px;
+  background-color: color.$WHITE;
+}
+
+.contentsContainer {
+  padding-top: 50px;
+}
