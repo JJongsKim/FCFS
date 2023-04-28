@@ -1,0 +1,92 @@
+@use '../../styles/GlobalColor.scss' as color;
+
+.introPageWrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blueBack {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  width: 330px;
+  height: 500px;
+  background-color: color.$BLUE;
+  z-index: 1;
+}
+
+.grayBack {
+  position: absolute;
+  top: 86px;
+  left: 0;
+  width: 330px;
+  height: 500px;
+  background-color: color.$BABY_GRAY;
+  z-index: 1;
+}
+
+.introContainer {
+  position: absolute;
+  padding: 64px 32px;
+  top: 54px;
+  width: 330px;
+  height: 508px;
+  background-color: color.$WHITE;
+  z-index: 3;
+}
+
+#firstSection {
+  font-size: 14px;
+  font-weight: 400;
+
+  p {
+    margin-bottom: 13px;
+  }
+
+  #emphasisText {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 23px 0 50px 0;
+  }
+}
+
+#secondSection {
+  display: grid;
+  grid-template-columns: 27px 243px;
+  row-gap: 16px;
+
+  p:nth-child(odd) {
+    font-size: 14px;
+  }
+  p:nth-child(even) {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    white-space: pre-wrap;
+  }
+}
+
+#lastSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 50px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p:nth-child(1) {
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    p:nth-child(2) {
+      font-size: 10px;
+      font-weight: 400;
+    }
+  }
+}
