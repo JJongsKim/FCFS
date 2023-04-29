@@ -1,3 +1,5 @@
+import { Outlet } from 'react-router-dom';
+
 import LayoutContainer from './LayoutContainer';
 import styles from './layout.module.scss';
 
@@ -9,7 +11,7 @@ interface layoutProps {
 const Layout = ({ children }: layoutProps) => {
   return (
     <div className={styles.layoutWrap}>
-      <LayoutContainer>{children}</LayoutContainer>
+      <LayoutContainer>{children || <Outlet />}</LayoutContainer>
     </div>
   );
 };
