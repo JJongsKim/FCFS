@@ -1,0 +1,24 @@
+.signUpWrap {
+  padding-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 7px;
+    cursor: pointer;
+  }
+}
+
+.loginBtnWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 29px;
+}

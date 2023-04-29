@@ -1,0 +1,21 @@
+.loginWrap {
+  padding-top: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span:nth-child(1) {
+    margin-bottom: 40px;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 7px;
+    cursor: pointer;
+  }
+}
+
+.loginBtnWrap {
+  margin-top: 70px;
+}

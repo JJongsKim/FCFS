@@ -1,5 +1,6 @@
 import Logo from '../common/Logo/Logo';
 
+import authStyles from './authLayout.module.scss';
 import styles from './layoutContainer.module.scss';
 
 interface Props {
@@ -9,10 +10,10 @@ interface Props {
 const AuthLayoutContainer = ({ children }: Props) => {
   return (
     <div className={styles.layoutContainerWrap}>
-      <div>
+      <div className={authStyles.logoContainer}>
         <Logo size="large" />
       </div>
-      <div className={styles.contentsContainer}>{children}</div>
+      <div>{children}</div>
     </div>
   );
 };
