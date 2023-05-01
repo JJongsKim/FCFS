@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout';
 import AuthLayout from './components/layout/AuthLayout';
 import Introduction from './pages/Introduction';
+import ListPage from './pages/ListPage';
 import MainPage from './pages/MainPage';
 import Login from './pages/auth/Login';
 import SignUp from './pages/auth/SignUp';
@@ -15,6 +16,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<MainPage />} />
             <Route path="/introduction" element={<Introduction />} />
+            <Route path="list-page" element={<ListPage />} />
           </Route>
           <Route element={<AuthLayout />}>
             <Route path="/sign-in" element={<Login />} />

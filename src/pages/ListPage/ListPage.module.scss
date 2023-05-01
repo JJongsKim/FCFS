@@ -1,0 +1,65 @@
+@use '../../styles/GlobalColor.scss' as color;
+
+// pageWrap과 topHr은 다른 부분에서도 사용하기
+.pageWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#topHr {
+  width: 50px;
+  height: 2px;
+  margin: 20px 0 12px 0;
+  background-color: color.$BLUE;
+}
+
+.categoryBox {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 10px;
+  column-gap: 5px;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 400;
+
+  p {
+    cursor: pointer;
+  }
+}
+
+.listBox {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  margin-top: 25px;
+
+  img {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+  }
+
+  .listItems {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 80px 241px 54px;
+    grid-template-rows: 40px;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 3;
+
+    p:nth-child(2) {
+      margin-right: 20px;
+    }
+  }
+}
+
+#listBtn {
+  position: absolute;
+  bottom: 20px;
+  right: 15px;
+  z-index: 4;
+}
