@@ -1,10 +1,15 @@
+import { useRecoilState } from 'recoil';
+
 import competition from '../../assets/competition.svg';
 import eating from '../../assets/eating.svg';
 import health from '../../assets/health.svg';
 import onedayclass from '../../assets/onedayclass.svg';
 import ott from '../../assets/ott.svg';
 import study from '../../assets/study.svg';
+import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
+import Modal from '../../components/modal';
+import Portal from '../../components/modal/Portal';
 
 import styles from './MainPage.module.scss';
 
@@ -12,6 +17,11 @@ const imgSrc = [study, ott, eating, competition, health, onedayclass];
 const categoryNames = ['OTT구독', '원데이클래스', '스터디', '공모전', '맛집웨이팅', '운동'];
 
 const MainPage = () => {
+  const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
+  const handleClickWriteBtn = () => {
+    setWriteBtn(!writeBtn);
+  };
+
   return (
     <div className={styles.mainPageWrap}>
       <section className={styles.animeSection}>
@@ -48,9 +58,10 @@ const MainPage = () => {
       </section>
       <section id={styles.sectionFlexColumn}>
         <p id={styles.sectionTitle}>선착순 구하러 갈래요?</p>
-        <Button size="small" color="blue">
+        <Button size="small" color="blue" onClick={handleClickWriteBtn}>
           글 쓰러가기
         </Button>
+        {writeBtn && <Modal />}
       </section>
     </div>
   );
