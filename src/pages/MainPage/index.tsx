@@ -9,7 +9,6 @@ import study from '../../assets/study.svg';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
 import Modal from '../../components/modal';
-import Portal from '../../components/modal/Portal';
 
 import styles from './MainPage.module.scss';
 
