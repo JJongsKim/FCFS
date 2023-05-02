@@ -1,0 +1,28 @@
+@use '../../../styles/GlobalColor.scss' as color;
+
+.textAreaWrap {
+  background-color: color.$BABY_GRAY;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+  outline: none;
+
+  &.small {
+    width: 260px;
+    height: 35px;
+    padding: 10px 12px;
+  }
+
+  &.medium {
+    width: 260px;
+    height: 200px;
+    padding: 20px 13px;
+  }
+
+  &.large {
+  }
+
+  textAreaWrap::focus {
+    outline: none;
+  }
+}
