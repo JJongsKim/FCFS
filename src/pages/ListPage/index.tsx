@@ -1,11 +1,20 @@
+import { useRecoilState } from 'recoil';
+
 import listBg from '../../assets/listBg.svg';
+import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
+import Modal from '../../components/modal';
 
 import styles from './ListPage.module.scss';
 
 const categoryNames = ['OTT구독', '원데이클래스', '스터디', '공모전', '맛집웨이팅', '운동'];
 
 const ListPage = () => {
+  const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
+  const handleClickWriteBtn = () => {
+    setWriteBtn(!writeBtn);
+  };
+
   return (
     <div className={styles.pageWrap}>
       <div id={styles.topHr} />
@@ -24,9 +33,10 @@ const ListPage = () => {
         </div>
       </section>
       <div id={styles.listBtn}>
-        <Button size="small" color="blue">
+        <Button size="small" color="blue" onClick={handleClickWriteBtn}>
           글 쓰러가기
         </Button>
+        {writeBtn && <Modal />}
       </div>
     </div>
   );
