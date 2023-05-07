@@ -18,19 +18,39 @@
 }
 
 #modalContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
   width: 320px;
   height: 480px;
   background-color: color.$WHITE;
   border-radius: 15px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
   z-index: 10;
+
+  section:nth-child(2) {
+    margin-bottom: 18px;
+  }
+  section:nth-child(3) {
+    margin-bottom: 24px;
+  }
+  span {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .dropdownBox {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 32px 22px;
+  padding: 28px 0 22px;
   width: 100%;
   height: 74px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  padding-bottom: 5px;
 }
