@@ -6,10 +6,15 @@ type buttonProps = {
   size?: 'small' | 'large';
   color?: string;
   children?: string;
+  onClick?: () => void;
 };
 
-const Button = ({ size, color, children }: buttonProps) => {
-  return <button className={classNames('buttonWrap', size, color)}>{children}</button>;
+const Button = ({ size, color, children, onClick }: buttonProps) => {
+  return (
+    <button className={classNames('buttonWrap', size, color)} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 Button.defaultProps = {
