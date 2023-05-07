@@ -20,6 +20,10 @@
   }
 
   &.large {
+    width: 320px;
+    height: 360px;
+    padding: 20px 13px;
+    line-height: 25px;
   }
 
   textAreaWrap::focus {
