@@ -8,6 +8,22 @@ import Modal from '../../components/modal';
 import styles from './ListPage.module.scss';
 
 const categoryNames = ['OTT구독', '원데이클래스', '스터디', '공모전', '맛집웨이팅', '운동'];
+const mockList = [
+  {
+    id: 1,
+    category: '원데이클래스',
+    title: '바리스타 클래스 둘이 들으실 분?',
+    num: 0,
+    totalNum: 2,
+  },
+  {
+    id: 2,
+    category: '공모전',
+    title: '한이음 AI 프로젝트 나가실 분 구합니다!',
+    num: 1,
+    totalNum: 3,
+  },
+];
 
 const ListPage = () => {
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
@@ -25,11 +41,21 @@ const ListPage = () => {
       </div>
       <section className={styles.listBox}>
         <img src={listBg} />
-        <div className={styles.listItems}>
+        <div className={styles.listTitleCate}>
           <p>카테고리</p>
           <p>제목</p>
           <p>인원</p>
-          {/* 아랫부분부터 글 목록 12개 반복문 돌리기 */}
+        </div>
+        <div id={styles.listItem}>
+          {mockList.map(item => (
+            <div key={item.id} id={styles.items}>
+              <p>{item.category}</p>
+              <p>{item.title}</p>
+              <p>
+                {item.num}/{item.totalNum}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
       <div id={styles.listBtn}>
