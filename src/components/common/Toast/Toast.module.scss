@@ -1,0 +1,38 @@
+@use '../../../styles/GlobalColor.scss' as color;
+
+@keyframes toast {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.toastWrap {
+  position: absolute;
+  left: 58px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 260px;
+  height: 100px;
+  z-index: 10;
+  background-color: color.$WHITE_GRAY;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 600;
+
+  animation: toast;
+  animation-duration: 4s;
+}
+
+.twoLineBox {
+  display: flex;
+  flex-direction: column;
+}
