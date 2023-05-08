@@ -1,7 +1,12 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import prev from '../../assets/prev.svg';
+import { DeleteInfoToast } from '../../atoms/DeleteInfoToast';
 import Button from '../../components/common/Button';
+import { LargeToast, MediumToast } from '../../components/common/Toast';
+import { ACTIVE_MSG, DELETE_MSG } from '../../utils/contant';
 
 import styles from './DetailPage.module.scss';
 
@@ -9,10 +14,41 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { category, title, detail, num, totalNum, isAdmin } = location.state;
+  const [toast, setToast] = useState(false);
+  const [deleteInfoToast, setDeleteInfoToast] = useRecoilState(DeleteInfoToast);
+  const [currentToastValue, setCurrentToastValue] = useState('');
 
   const handlePrevPage = () => {
     navigate(-1);
   };
+
+  const handleClickDelete = () => {
+    // TODO api 연결
+    setCurrentToastValue(DELETE_MSG);
+    setDeleteInfoToast(false);
+    setToast(true);
+
+    setTimeout(() => {
+      setToast(false);
+      setCurrentToastValue('');
+    }, 3500);
+  };
+
+  // 테스트용 동작
+  const handleClickActive = () => {
+    setToast(true);
+    setCurrentToastValue(ACTIVE_MSG);
+  };
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(false);
+        setCurrentToastValue('');
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   return (
     <div className={styles.pageWrap}>
@@ -45,15 +81,17 @@ const DetailPage = () => {
           <Button size="small" color="blue">
             수정하기
           </Button>
-          <Button size="small" color="blue">
+          <Button size="small" color="blue" onClick={() => setDeleteInfoToast(true)}>
             삭제하기
           </Button>
         </div>
       ) : (
-        <Button size="small" color="blue">
+        <Button size="small" color="blue" onClick={handleClickActive}>
           참여하기
         </Button>
       )}
+      {toast && <MediumToast>{currentToastValue}</MediumToast>}
+      {deleteInfoToast && <LargeToast handleFunc={handleClickDelete} />}
     </div>
   );
 };

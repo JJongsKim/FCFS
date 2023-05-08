@@ -6,7 +6,7 @@ type buttonProps = {
   size?: 'small' | 'large';
   color?: string;
   children?: string;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
 };
 
 const Button = ({ size, color, children, onClick }: buttonProps) => {
