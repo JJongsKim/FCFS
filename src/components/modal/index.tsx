@@ -24,7 +24,7 @@ const Modal = () => {
 
     setTimeout(() => {
       setWriteBtn(false);
-    }, 3000);
+    }, 1800);
   };
 
   return (

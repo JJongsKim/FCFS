@@ -31,7 +31,8 @@ const DetailPage = () => {
     setTimeout(() => {
       setToast(false);
       setCurrentToastValue('');
-    }, 3500);
+      // TODO 삭제 api 연결 후 리스트페이지로 이동하도록 수정
+    }, 1800);
   };
 
   // 테스트용 동작
@@ -45,7 +46,7 @@ const DetailPage = () => {
       const timer = setTimeout(() => {
         setToast(false);
         setCurrentToastValue('');
-      }, 3500);
+      }, 1800);
       return () => clearTimeout(timer);
     }
   }, [toast]);
