@@ -44,3 +44,40 @@
   display: flex;
   flex-direction: column;
 }
+
+.largeToastWrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 260px;
+  height: 160px;
+  z-index: 10;
+  background-color: color.$WHITE_GRAY;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 600;
+
+  p {
+    padding: 8px;
+  }
+
+  p:nth-child(2) {
+    color: color.$BLUE;
+  }
+
+  .buttonWrap {
+    margin-top: 30px;
+
+    button {
+      width: 80px;
+      height: 30px;
+      margin: 0 11px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: color.$BABY_BLUE;
+    }
+  }
+}

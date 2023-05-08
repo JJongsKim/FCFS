@@ -1,15 +1,24 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../../components/common/Button';
 import InputBase from '../../components/common/Input';
+import { MediumToast } from '../../components/common/Toast';
+import { SIGNIN_MSG } from '../../utils/contant';
 
 import styles from './Login.module.scss';
 
 const Login = () => {
   const navigate = useNavigate();
-  const handleClickLogin = () => {
+  const [toast, setToast] = useState(false);
+  const handleClickLogin = (e: React.FormEvent<HTMLFormElement>) => {
     // TODO api 연결하기
-    navigate('/');
+    e.preventDefault();
+    setToast(true);
+
+    setTimeout(() => {
+      navigate('/');
+    }, 3500);
   };
 
   return (
@@ -28,6 +37,7 @@ const Login = () => {
             로그인
           </Button>
         </div>
+        {toast && <MediumToast>{SIGNIN_MSG}</MediumToast>}
       </div>
     </form>
   );

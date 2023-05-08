@@ -1,15 +1,24 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../../components/common/Button';
 import InputBase from '../../components/common/Input';
+import { MediumToast } from '../../components/common/Toast';
+import { SIGNUP_MSG } from '../../utils/contant';
 
 import styles from './SignUp.module.scss';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const handleClickSignUp = () => {
+  const [toast, setToast] = useState(false);
+  const handleClickSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     // TODO api 연결하기
-    navigate('/sign-in');
+    e.preventDefault();
+    setToast(true);
+
+    setTimeout(() => {
+      navigate('/sign-in');
+    }, 3500);
   };
 
   return (
@@ -34,6 +43,7 @@ const SignUp = () => {
             회원가입
           </Button>
         </div>
+        {toast && <MediumToast>{SIGNUP_MSG}</MediumToast>}
       </div>
     </form>
   );

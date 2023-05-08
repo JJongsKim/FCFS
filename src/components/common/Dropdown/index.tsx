@@ -5,10 +5,6 @@ import dropup from '../../../assets/dropup.svg';
 
 import styles from './Dropdown.module.scss';
 
-type DropDownProps = {
-  children?: string;
-};
-
 const category = ['OTT구독', '원데이클래스', '스터디', '공모전', '맛집웨이팅', '운동'];
 const numbers = ['1명', '2명', '3명', '4명', '5명'];
 
@@ -25,7 +21,7 @@ export const CateDropDown = () => {
 
   return (
     <div>
-      <button onClick={handleClickDropBtn} id={styles.selectBox}>
+      <button type="button" onClick={handleClickDropBtn} id={styles.selectBox}>
         {currentCate}
         {click ? <img src={dropup} /> : <img src={dropdown} />}
       </button>
@@ -55,7 +51,7 @@ export const NumDropDown = () => {
 
   return (
     <div>
-      <button onClick={handleClickDropBtn} id={styles.selectBox}>
+      <button type="button" onClick={handleClickDropBtn} id={styles.selectBox}>
         {currentNum}
         {click ? <img src={dropup} /> : <img src={dropdown} />}
       </button>
