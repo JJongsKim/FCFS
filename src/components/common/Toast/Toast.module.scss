@@ -14,9 +14,17 @@
   }
 }
 
+.toastBackground {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 50%;
+  left: 0;
+  right: 0;
+}
+
 .toastWrap {
   position: absolute;
-  left: 58px;
   display: flex;
   justify-content: center;
   align-items: center;

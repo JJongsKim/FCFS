@@ -8,7 +8,9 @@ interface toastProps {
 export const MediumToast = ({ children }: toastProps) => {
   return (
     <ToastPortal>
-      <div className={styles.toastWrap}>{children}</div>
+      <div className={styles.toastBackground}>
+        <div className={styles.toastWrap}>{children}</div>
+      </div>
     </ToastPortal>
   );
 };

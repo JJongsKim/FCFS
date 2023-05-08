@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import competition from '../../assets/competition.svg';
@@ -16,9 +17,15 @@ const imgSrc = [study, ott, eating, competition, health, onedayclass];
 const categoryNames = ['OTT구독', '원데이클래스', '스터디', '공모전', '맛집웨이팅', '운동'];
 
 const MainPage = () => {
+  const navigate = useNavigate();
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
   const handleClickWriteBtn = () => {
     setWriteBtn(!writeBtn);
+  };
+
+  const handleClickCate = () => {
+    // TODO 나중에 arg 받아와서 카테고리에 따라 달라지도록 수정하기
+    navigate('/list-page');
   };
 
   return (
@@ -49,7 +56,7 @@ const MainPage = () => {
         <p id={styles.sectionTitle}>카테고리 바로가기</p>
         <div>
           {categoryNames.map((item, idx) => (
-            <Button key={idx} size="small" color="babyGray">
+            <Button key={idx} size="small" color="babyGray" onClick={handleClickCate}>
               {item}
             </Button>
           ))}

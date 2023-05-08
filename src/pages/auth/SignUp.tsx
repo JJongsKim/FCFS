@@ -7,6 +7,10 @@ import styles from './SignUp.module.scss';
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const handleClickSignUp = () => {
+    // TODO api 연결하기
+    navigate('/sign-in');
+  };
 
   return (
     <form>
@@ -26,7 +30,7 @@ const SignUp = () => {
 
         <div className={styles.loginBtnWrap}>
           <p onClick={() => navigate('/sign-in')}>이미 가입하셨나요? 로그인하기</p>
-          <Button size="large" color="blue">
+          <Button size="large" color="blue" onClick={handleClickSignUp}>
             회원가입
           </Button>
         </div>
