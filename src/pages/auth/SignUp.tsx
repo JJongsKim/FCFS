@@ -11,7 +11,7 @@ import styles from './SignUp.module.scss';
 const SignUp = () => {
   const navigate = useNavigate();
   const [toast, setToast] = useState(false);
-  const handleClickSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClickSignUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     // TODO api 연결하기
     e.preventDefault();
     setToast(true);

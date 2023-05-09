@@ -11,7 +11,7 @@ import styles from './Login.module.scss';
 const Login = () => {
   const navigate = useNavigate();
   const [toast, setToast] = useState(false);
-  const handleClickLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClickLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     // TODO api 연결하기
     e.preventDefault();
     setToast(true);
