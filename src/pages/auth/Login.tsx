@@ -33,7 +33,7 @@ const Login = () => {
 
         <div className={styles.loginBtnWrap}>
           <p onClick={() => navigate('/sign-up')}>아직 회원이 아니신가요?</p>
-          <Button size="large" color="blue" onClick={handleClickLogin}>
+          <Button size="large" color="blue" onClick={e => handleClickLogin(e)}>
             로그인
           </Button>
         </div>

@@ -39,7 +39,7 @@ const SignUp = () => {
 
         <div className={styles.loginBtnWrap}>
           <p onClick={() => navigate('/sign-in')}>이미 가입하셨나요? 로그인하기</p>
-          <Button size="large" color="blue" onClick={handleClickSignUp}>
+          <Button size="large" color="blue" onClick={e => handleClickSignUp(e)}>
             회원가입
           </Button>
         </div>
