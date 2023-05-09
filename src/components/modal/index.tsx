@@ -18,7 +18,7 @@ const Modal = () => {
     setWriteBtn(false);
   };
 
-  const handleClickUpload = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClickUpload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setToast(true);
 
