@@ -26,3 +26,8 @@
     • etc
     - ESLint, Prettier
   ```
+
+### CONVENTION
+  ```
+    GITMOJI🤪
+  ```
