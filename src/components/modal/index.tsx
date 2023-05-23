@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { CateDropDownAtom, NumDropDownAtom } from '../../atoms/DropdownItem';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
-import { UPLOAD_MSG } from '../../utils/contant';
+import { ERR_MSG, UPLOAD_MSG } from '../../utils/contant';
 import Button from '../common/Button';
 import { CateDropDown, NumDropDown } from '../common/Dropdown';
 import TextArea from '../common/TextArea';
@@ -14,8 +14,9 @@ import styles from './modal.module.scss';
 
 const Modal = () => {
   const [toast, setToast] = useState(false);
-  const categoryAtom = useRecoilValue(CateDropDownAtom);
-  const numAtom = useRecoilValue(NumDropDownAtom);
+  const [errToast, setErrToast] = useState(false);
+  const [categoryAtom, setCategoryAtom] = useRecoilState(CateDropDownAtom);
+  const [numAtom, setNumAtom] = useRecoilState(NumDropDownAtom);
   const setWriteBtn = useSetRecoilState(WriteBtnAtom);
   const handleClickBackground = () => {
     setWriteBtn(false);
@@ -23,11 +24,25 @@ const Modal = () => {
 
   const handleClickUpload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setToast(true);
+    if (
+      categoryAtom === '카테고리' ||
+      numAtom === '인원' ||
+      boardInfo.title === '' ||
+      boardInfo.content === ''
+    ) {
+      setErrToast(true);
+      setTimeout(() => {
+        setErrToast(false);
+      }, 1800);
+    } else {
+      setToast(true);
+      setCategoryAtom('카테고리');
+      setNumAtom('인원');
 
-    setTimeout(() => {
-      setWriteBtn(false);
-    }, 1800);
+      setTimeout(() => {
+        setWriteBtn(false);
+      }, 1800);
+    }
   };
 
   const [boardInfo, setBoardInfo] = useState({
@@ -81,6 +96,7 @@ const Modal = () => {
           </form>
         </div>
         {toast && <MediumToast>{UPLOAD_MSG}</MediumToast>}
+        {errToast && <MediumToast>{ERR_MSG}</MediumToast>}
       </div>
     </Portal>
   );
