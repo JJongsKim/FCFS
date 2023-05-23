@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 import dropdown from '../../../assets/dropdown.svg';
 import dropup from '../../../assets/dropup.svg';
+import { CateDropDownAtom, NumDropDownAtom } from '../../../atoms/DropdownItem';
 
 import styles from './Dropdown.module.scss';
 
@@ -9,7 +11,7 @@ const category = ['OTT구독', '원데이클래스', '스터디', '공모전', '
 const numbers = ['1명', '2명', '3명', '4명', '5명'];
 
 export const CateDropDown = () => {
-  const [currentCate, setCurrentCate] = useState('카테고리');
+  const [currentCate, setCurrentCate] = useRecoilState(CateDropDownAtom);
   const [click, setClick] = useState(false);
   const handleClickDropBtn = () => {
     setClick(!click);
@@ -39,7 +41,7 @@ export const CateDropDown = () => {
 };
 
 export const NumDropDown = () => {
-  const [currentNum, setCurrentNum] = useState('인원');
+  const [currentNum, setCurrentNum] = useRecoilState(NumDropDownAtom);
   const [click, setClick] = useState(false);
   const handleClickDropBtn = () => {
     setClick(!click);
