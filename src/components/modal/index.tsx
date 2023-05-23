@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { CateDropDownAtom, NumDropDownAtom } from '../../atoms/DropdownItem';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
