@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import listBg from '../../assets/listBg.svg';
@@ -34,6 +34,8 @@ const mockList = [
 ];
 
 const ListPage = () => {
+  const { state } = useLocation();
+
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
   const [clickCate, setClickCate] = useState(false);
   const [clickCateName, setClickCateName] = useState('');
@@ -50,6 +52,13 @@ const ListPage = () => {
       setClickCateName('');
     }
   };
+
+  useEffect(() => {
+    if (state !== null && state) {
+      setClickCate(true);
+      setClickCateName(state);
+    }
+  }, []);
 
   return (
     <div className={styles.pageWrap}>
