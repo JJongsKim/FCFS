@@ -88,13 +88,7 @@ const ListPage = () => {
               <Link
                 to={`/detail-page/${item.id}`}
                 state={{
-                  id: item.id,
-                  category: item.category,
-                  title: item.title,
-                  detail: item.detail,
-                  num: item.num,
-                  totalNum: item.totalNum,
-                  isAdmin: item.isAdmin,
+                  ...item,
                 }}
               >
                 <p>{item.title}</p>
