@@ -21,14 +21,40 @@ const Login = () => {
     }, 1800);
   };
 
+  const [loginInfo, setLoginInfo] = useState({
+    userId: '',
+    userPassword: '',
+  });
+
+  const handleChangeInput = (name: string, value: string) => {
+    setLoginInfo(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <form>
       <div className={styles.loginWrap}>
         <span>
-          <InputBase type="text" label="아이디" placeHolder="아이디를 입력해주세요!" />
+          <InputBase
+            type="text"
+            label="아이디"
+            placeHolder="아이디를 입력해주세요!"
+            name="userId"
+            value={loginInfo.userId}
+            onChange={e => handleChangeInput('userId', e.target.value)}
+          />
         </span>
         <span>
-          <InputBase type="password" label="비밀번호" placeHolder="비밀번호를 입력해주세요!" />
+          <InputBase
+            type="password"
+            label="비밀번호"
+            placeHolder="비밀번호를 입력해주세요!"
+            name="userPassword"
+            value={loginInfo.userPassword}
+            onChange={e => handleChangeInput('userPassword', e.target.value)}
+          />
         </span>
 
         <div className={styles.loginBtnWrap}>

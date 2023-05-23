@@ -21,20 +21,61 @@ const SignUp = () => {
     }, 1800);
   };
 
+  const [userInfo, setUserInfo] = useState({
+    userId: '',
+    userName: '',
+    userPassword: '',
+    pwdCheck: '',
+  });
+
+  const handleChangeInput = (name: string, value: string) => {
+    setUserInfo(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <form>
       <div className={styles.signUpWrap}>
         <span>
-          <InputBase type="text" label="이름" placeHolder="이름을 입력해주세요!" />
+          <InputBase
+            type="text"
+            label="이름"
+            placeHolder="이름을 입력해주세요!"
+            name="userName"
+            value={userInfo.userName}
+            onChange={e => handleChangeInput('userName', e.target.value)}
+          />
         </span>
         <span>
-          <InputBase type="text" label="아이디" placeHolder="아이디를 입력해주세요!" />
+          <InputBase
+            type="text"
+            label="아이디"
+            placeHolder="아이디를 입력해주세요!"
+            name="userId"
+            value={userInfo.userId}
+            onChange={e => handleChangeInput('userId', e.target.value)}
+          />
         </span>
         <span>
-          <InputBase type="password" label="비밀번호" placeHolder="비밀번호를 입력해주세요!" />
+          <InputBase
+            type="password"
+            label="비밀번호"
+            placeHolder="비밀번호를 입력해주세요!"
+            name="userPassword"
+            value={userInfo.userPassword}
+            onChange={e => handleChangeInput('userPassword', e.target.value)}
+          />
         </span>
         <span>
-          <InputBase type="password" label="비밀번호 확인" />
+          <InputBase
+            type="password"
+            label="비밀번호 확인"
+            name="pwdCheck"
+            value={userInfo.pwdCheck}
+            onChange={e => handleChangeInput('pwdCheck', e.target.value)}
+          />
         </span>
 
         <div className={styles.loginBtnWrap}>
