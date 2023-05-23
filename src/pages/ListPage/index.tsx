@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -34,8 +35,20 @@ const mockList = [
 
 const ListPage = () => {
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
+  const [clickCate, setClickCate] = useState(false);
+  const [clickCateName, setClickCateName] = useState('');
   const handleClickWriteBtn = () => {
     setWriteBtn(!writeBtn);
+  };
+
+  const handleClickCate = (cateName: string) => {
+    setClickCate(!clickCate);
+    setClickCateName(cateName);
+
+    // 카테고리를 한 번 더 누를 시 전체보기로 바뀌도록
+    if (cateName === clickCateName) {
+      setClickCateName('');
+    }
   };
 
   return (
@@ -43,7 +56,13 @@ const ListPage = () => {
       <div id={styles.topHr} />
       <div className={styles.categoryBox}>
         {categoryNames.map((item, idx) => (
-          <p key={idx}>{item}</p>
+          <p
+            key={idx}
+            onClick={() => handleClickCate(item)}
+            id={clickCateName === item ? styles.selectCategory : ''}
+          >
+            {item}
+          </p>
         ))}
       </div>
       <section className={styles.listBox}>

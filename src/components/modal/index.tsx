@@ -24,7 +24,6 @@ const Modal = () => {
   const handleClickUpload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setToast(true);
-    console.log(boardInfo);
 
     setTimeout(() => {
       setWriteBtn(false);
