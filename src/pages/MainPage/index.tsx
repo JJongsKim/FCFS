@@ -23,9 +23,11 @@ const MainPage = () => {
     setWriteBtn(!writeBtn);
   };
 
-  const handleClickCate = () => {
+  const handleClickCate = (item: string) => {
     // TODO 나중에 arg 받아와서 카테고리에 따라 달라지도록 수정하기
-    navigate('/list-page');
+    navigate('/list-page', {
+      state: item,
+    });
   };
 
   return (
@@ -56,7 +58,7 @@ const MainPage = () => {
         <p id={styles.sectionTitle}>카테고리 바로가기</p>
         <div>
           {categoryNames.map((item, idx) => (
-            <Button key={idx} size="small" color="babyGray" onClick={handleClickCate}>
+            <Button key={idx} size="small" color="babyGray" onClick={() => handleClickCate(item)}>
               {item}
             </Button>
           ))}

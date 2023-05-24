@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import listBg from '../../assets/listBg.svg';
@@ -33,17 +34,44 @@ const mockList = [
 ];
 
 const ListPage = () => {
+  const { state } = useLocation();
+
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
+  const [clickCate, setClickCate] = useState(false);
+  const [clickCateName, setClickCateName] = useState('');
   const handleClickWriteBtn = () => {
     setWriteBtn(!writeBtn);
   };
+
+  const handleClickCate = (cateName: string) => {
+    setClickCate(!clickCate);
+    setClickCateName(cateName);
+
+    // 카테고리를 한 번 더 누를 시 전체보기로 바뀌도록
+    if (cateName === clickCateName) {
+      setClickCateName('');
+    }
+  };
+
+  useEffect(() => {
+    if (state !== null && state) {
+      setClickCate(true);
+      setClickCateName(state);
+    }
+  }, []);
 
   return (
     <div className={styles.pageWrap}>
       <div id={styles.topHr} />
       <div className={styles.categoryBox}>
         {categoryNames.map((item, idx) => (
-          <p key={idx}>{item}</p>
+          <p
+            key={idx}
+            onClick={() => handleClickCate(item)}
+            id={clickCateName === item ? styles.selectCategory : ''}
+          >
+            {item}
+          </p>
         ))}
       </div>
       <section className={styles.listBox}>
@@ -60,13 +88,7 @@ const ListPage = () => {
               <Link
                 to={`/detail-page/${item.id}`}
                 state={{
-                  id: item.id,
-                  category: item.category,
-                  title: item.title,
-                  detail: item.detail,
-                  num: item.num,
-                  totalNum: item.totalNum,
-                  isAdmin: item.isAdmin,
+                  ...item,
                 }}
               >
                 <p>{item.title}</p>
