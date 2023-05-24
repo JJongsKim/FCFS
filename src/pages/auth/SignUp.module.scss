@@ -1,3 +1,5 @@
+@use '../../styles/GlobalColor.scss' as color;
+
 .signUpWrap {
   padding-top: 32px;
   display: flex;
@@ -21,4 +23,16 @@
   flex-direction: column;
   align-items: center;
   margin-top: 29px;
+}
+
+.pwCheckBox {
+  position: relative;
+}
+
+#validMsg {
+  position: absolute;
+  top: 75px;
+  font-size: 10px;
+  font-weight: 600;
+  color: color.$BLUE;
 }
