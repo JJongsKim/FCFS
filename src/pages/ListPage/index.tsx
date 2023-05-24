@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import listBg from '../../assets/listBg.svg';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
+import { MediumToast } from '../../components/common/Toast';
 import Modal from '../../components/modal';
+import { LOGIN_INFO_MSG } from '../../utils/contant';
 
 import styles from './ListPage.module.scss';
 
@@ -35,12 +38,24 @@ const mockList = [
 
 const ListPage = () => {
   const { state } = useLocation();
+  const [token, ,] = useCookies(['userToken']);
 
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
+  const [infoToast, setInfoToast] = useState(false); // 로그인 후 이용 토스트
   const [clickCate, setClickCate] = useState(false);
   const [clickCateName, setClickCateName] = useState('');
   const handleClickWriteBtn = () => {
-    setWriteBtn(!writeBtn);
+    {
+      token.userToken ? setWriteBtn(!writeBtn) : handleShowInfoToast();
+    }
+  };
+
+  const handleShowInfoToast = () => {
+    setInfoToast(true);
+
+    setTimeout(() => {
+      setInfoToast(false);
+    }, 1700);
   };
 
   const handleClickCate = (cateName: string) => {
@@ -85,14 +100,18 @@ const ListPage = () => {
           {mockList.map(item => (
             <div key={item.id} id={styles.items}>
               <p>{item.category}</p>
-              <Link
-                to={`/detail-page/${item.id}`}
-                state={{
-                  ...item,
-                }}
-              >
-                <p>{item.title}</p>
-              </Link>
+              {token.userToken ? (
+                <Link
+                  to={`/detail-page/${item.id}`}
+                  state={{
+                    ...item,
+                  }}
+                >
+                  <p>{item.title}</p>
+                </Link>
+              ) : (
+                <p onClick={handleShowInfoToast}>{item.title}</p>
+              )}
               <p>
                 {item.num}/{item.totalNum}
               </p>
@@ -105,6 +124,7 @@ const ListPage = () => {
           글 쓰러가기
         </Button>
         {writeBtn && <Modal />}
+        {infoToast && <MediumToast>{LOGIN_INFO_MSG}</MediumToast>}
       </div>
     </div>
   );

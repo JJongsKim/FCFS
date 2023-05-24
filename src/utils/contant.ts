@@ -7,5 +7,6 @@ export const ACTIVE_MSG = '참여하기를 눌렀습니다!';
 export const ERR_MSG = '게시글 작성 형식을 지켜주세요.';
 export const AUTH_ERR_MSG = '빈칸없이 모두 입력해주세요.';
 export const LOGIN_ERR_MSG = '다시 한 번 확인해주세요.';
+export const LOGIN_INFO_MSG = '로그인 후 이용해주세요!';
 
 export const API = process.env.REACT_APP_API_URL;

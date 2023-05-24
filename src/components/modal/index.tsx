@@ -26,18 +26,19 @@ const Modal = () => {
     e.preventDefault();
     if (
       categoryAtom === '카테고리' ||
-      numAtom === '인원' ||
-      boardInfo.title === '' ||
-      boardInfo.content === ''
+      numAtom === 0 ||
+      boardInfo.Title === '' ||
+      boardInfo.Content === ''
     ) {
       setErrToast(true);
       setTimeout(() => {
         setErrToast(false);
       }, 1800);
     } else {
+      // 업로드성공
       setToast(true);
       setCategoryAtom('카테고리');
-      setNumAtom('인원');
+      setNumAtom(0);
 
       setTimeout(() => {
         setWriteBtn(false);
@@ -46,17 +47,18 @@ const Modal = () => {
   };
 
   const [boardInfo, setBoardInfo] = useState({
-    category: '',
-    number: '', // TODO 나중에 숫자만 들어가도록 수정
-    title: '',
-    content: '',
+    Category: '',
+    HeadCount: 0, // TODO 나중에 숫자만 들어가도록 수정
+    Title: '',
+    Content: '',
+    CurrentCount: 0,
   });
 
   const handleChangeTextarea = (name: string, value: string) => {
     setBoardInfo(prev => ({
       ...prev,
-      category: categoryAtom,
-      number: numAtom,
+      Category: categoryAtom,
+      HeadCount: numAtom,
       [name]: value,
     }));
   };
@@ -75,16 +77,16 @@ const Modal = () => {
                 <p className={styles.title}>제목</p>
                 <TextArea
                   size="small"
-                  value={boardInfo.title}
-                  onChange={e => handleChangeTextarea('title', e.target.value)}
+                  value={boardInfo.Title}
+                  onChange={e => handleChangeTextarea('Title', e.target.value)}
                 />
               </section>
               <section>
                 <p className={styles.title}>내용</p>
                 <TextArea
                   size="medium"
-                  value={boardInfo.content}
-                  onChange={e => handleChangeTextarea('content', e.target.value)}
+                  value={boardInfo.Content}
+                  onChange={e => handleChangeTextarea('Content', e.target.value)}
                 />
               </section>
               <span>

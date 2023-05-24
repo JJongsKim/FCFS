@@ -54,13 +54,13 @@ export const NumDropDown = () => {
   return (
     <div>
       <button type="button" onClick={handleClickDropBtn} id={styles.selectBox}>
-        {currentNum}
+        {currentNum !== 0 ? `${currentNum}명` : '인원'}
         {click ? <img src={dropup} /> : <img src={dropdown} />}
       </button>
       {click && (
         <ul id={styles.optionBox}>
           {numbers.map((num, idx) => (
-            <li key={idx} onClick={() => setCurrentNum(num)}>
+            <li key={idx} onClick={() => setCurrentNum(parseInt(num[0]))}>
               <button onClick={handleClickItems}>{num}</button>
             </li>
           ))}
