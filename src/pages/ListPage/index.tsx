@@ -48,7 +48,6 @@ const ListPage = () => {
     }
   };
 
-  // TODO GET에 넘겨주는 것 중, 게시글 순서(id)/userId(토큰값) 가져오도록 쿼리 수정하기
   const showBoards = () => {
     axios.get(`${API}/title`).then(res => {
       setBoards(res.data);
@@ -86,12 +85,11 @@ const ListPage = () => {
         </div>
         <div id={styles.listItem}>
           {boards.map(item => (
-            // TODO key값 content id값으로, 개별 조회 하는 방법도 서버에 맞춰서 수정하기
-            <div key={item.Content} id={styles.items}>
+            <div key={item.boardId} id={styles.items}>
               <p>{item.Category}</p>
               {token.userToken ? (
                 <Link
-                  to={`/detail-page/${item.Content}`}
+                  to={`/detail-page/${item.boardId}`}
                   state={{
                     ...item,
                   }}

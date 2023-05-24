@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -6,14 +8,15 @@ import prev from '../../assets/prev.svg';
 import { DeleteInfoToast } from '../../atoms/DeleteInfoToast';
 import Button from '../../components/common/Button';
 import { LargeToast, MediumToast } from '../../components/common/Toast';
-import { ACTIVE_MSG, DELETE_MSG } from '../../utils/contant';
+import { ACTIVE_MSG, API, DELETE_MSG } from '../../utils/contant';
 
 import styles from './DetailPage.module.scss';
 
 const DetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { category, title, detail, num, totalNum, isAdmin } = location.state;
+  const [token, ,] = useCookies(['userToken']);
+  const { Category, Title, HeadCount, CurrentCount, Content, userId, boardId } = location.state;
   const [toast, setToast] = useState(false);
   const [deleteInfoToast, setDeleteInfoToast] = useRecoilState(DeleteInfoToast);
   const [currentToastValue, setCurrentToastValue] = useState('');
@@ -23,16 +26,19 @@ const DetailPage = () => {
   };
 
   const handleClickDelete = () => {
-    // TODO api 연결
-    setCurrentToastValue(DELETE_MSG);
-    setDeleteInfoToast(false);
-    setToast(true);
+    axios.delete(`${API}/${boardId}`).then(res => {
+      if (res.status !== 404 && res.status !== 500) {
+        setCurrentToastValue(DELETE_MSG);
+        setDeleteInfoToast(false);
+        setToast(true);
 
-    setTimeout(() => {
-      setToast(false);
-      setCurrentToastValue('');
-      // TODO 삭제 api 연결 후 리스트페이지로 이동하도록 수정
-    }, 1800);
+        setTimeout(() => {
+          setToast(false);
+          setCurrentToastValue('');
+          navigate('/list-page');
+        }, 1800);
+      }
+    });
   };
 
   // 테스트용 동작
@@ -60,24 +66,24 @@ const DetailPage = () => {
       <div id={styles.topHr} />
       <section id={styles.firstSection}>
         <div id={styles.titleText}>
-          카테고리 : <p>{category}</p>
+          카테고리 : <p>{Category}</p>
         </div>
         <div id={styles.titleText}>
           인원 :
           <p>
-            {num}/{totalNum}
+            {CurrentCount}/{HeadCount}
           </p>
         </div>
       </section>
       <section id={styles.secondSection}>
         <p id={styles.titleText}>제목</p>
-        <p>{title}</p>
+        <p>{Title}</p>
       </section>
       <section id={styles.thirdSection}>
         <p id={styles.titleText}>내용</p>
-        <div className={styles.detailReadBox}>{detail}</div>
+        <div className={styles.detailReadBox}>{Content}</div>
       </section>
-      {isAdmin ? (
+      {userId === token.userToken ? (
         <div className={styles.buttonWrap}>
           <Button size="small" color="blue">
             수정하기
