@@ -13,6 +13,13 @@
     padding: 8px 12px;
   }
 
+  &.editSmall {
+    width: 100%;
+    height: 35px;
+    margin-top: 5px;
+    padding: 8px 12px;
+  }
+
   &.medium {
     width: 260px;
     height: 200px;
@@ -22,6 +29,13 @@
   &.large {
     width: 320px;
     height: 360px;
+    padding: 20px 13px;
+    line-height: 25px;
+  }
+
+  &.editLarge {
+    width: 100%;
+    height: 340px;
     padding: 20px 13px;
     line-height: 25px;
   }

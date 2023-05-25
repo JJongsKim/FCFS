@@ -6,10 +6,12 @@ import { useRecoilState } from 'recoil';
 
 import prev from '../../assets/prev.svg';
 import { DeleteInfoToast } from '../../atoms/DeleteInfoToast';
+import { CateDropDownAtom, NumDropDownAtom } from '../../atoms/DropdownItem';
 import Button from '../../components/common/Button';
 import { CateDropDown, NumDropDown } from '../../components/common/Dropdown';
+import TextArea from '../../components/common/TextArea';
 import { LargeToast, MediumToast } from '../../components/common/Toast';
-import { ACTIVE_MSG, API, DELETE_MSG } from '../../utils/contant';
+import { ACTIVE_MSG, API, DELETE_MSG, EDIT_MSG } from '../../utils/contant';
 
 import styles from './DetailPage.module.scss';
 
@@ -19,8 +21,11 @@ const DetailPage = () => {
   const [token, ,] = useCookies(['userId']);
   const { Category, Title, HeadCount, CurrentCount, Content, userId, boardId } = location.state;
   const [toast, setToast] = useState(false);
+  const [editToast, setEditToast] = useState(false);
   const [isEditBtn, setIsEditBtn] = useState(false);
   const [deleteInfoToast, setDeleteInfoToast] = useRecoilState(DeleteInfoToast);
+  const [categoryAtom, setCategoryAtom] = useRecoilState(CateDropDownAtom);
+  const [numAtom, setNumAtom] = useRecoilState(NumDropDownAtom);
   const [currentToastValue, setCurrentToastValue] = useState('');
 
   const handlePrevPage = () => {
@@ -43,7 +48,58 @@ const DetailPage = () => {
     });
   };
 
-  // 테스트용 동작
+  // 수정할 때 따로 변경하지 않는 자료는 그대로 가져가도록
+  const [editInfo, setEditInfo] = useState({
+    Category: Category,
+    HeadCount: HeadCount,
+    Title: Title,
+    Content: Content,
+    userId: token.userId,
+    CurrentCount: CurrentCount,
+  });
+
+  // TODO TextArea 입력하면 전부 잘 바뀌는데, 드롭다운만 수정하면 제대로 적용안됨 수정필요
+  const handleChangeTextarea = (name: string, value: string) => {
+    setEditInfo(prev => ({
+      ...prev,
+      Category: categoryAtom,
+      HeadCount: numAtom,
+      [name]: value,
+    }));
+  };
+
+  const handleClickEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setEditToast(true);
+    setIsEditBtn(false);
+    // setCategoryAtom('카테고리');
+    // setNumAtom(0);
+
+    console.log(editInfo);
+
+    setTimeout(() => {
+      setEditToast(false);
+    }, 1700);
+
+    // axios
+    //   .put(`${API}/${boardId}`, {
+    //     ...editInfo,
+    //   })
+    //   .then(res => {
+    //     if (res.status === 200) {
+    //       setEditToast(true);
+    //       setCategoryAtom('카테고리');
+    //       setNumAtom(0);
+
+    //       setTimeout(() => {
+    //         setEditToast(false);
+    //       }, 1700);
+    //     }
+    //   });
+  };
+
+  // TODO 참여하기 API 연결
   const handleClickActive = () => {
     setToast(true);
     setCurrentToastValue(ACTIVE_MSG);
@@ -93,18 +149,38 @@ const DetailPage = () => {
         </section>
         <section id={styles.secondSection}>
           <p id={styles.titleText}>제목</p>
-          <p>{Title}</p>
+          {isEditBtn ? (
+            <TextArea
+              size="editSmall"
+              value={editInfo.Title}
+              onChange={e => handleChangeTextarea('Title', e.target.value)}
+            >
+              {Title}
+            </TextArea>
+          ) : (
+            <p>{Title}</p>
+          )}
         </section>
         <section id={styles.thirdSection}>
           <p id={styles.titleText}>내용</p>
-          <div className={styles.detailReadBox}>{Content}</div>
+          {isEditBtn ? (
+            <TextArea
+              size="editLarge"
+              value={editInfo.Content}
+              onChange={e => handleChangeTextarea('Content', e.target.value)}
+            >
+              {Content}
+            </TextArea>
+          ) : (
+            <div className={styles.detailReadBox}>{Content}</div>
+          )}
         </section>
       </div>
       {userId === token.userId ? (
         <div className={styles.buttonWrap}>
           {isEditBtn ? (
             <>
-              <Button size="small" color="blue">
+              <Button size="small" color="blue" onClick={e => handleClickEdit(e)}>
                 수정완료하기
               </Button>
               <Button size="small" color="blue" onClick={() => setIsEditBtn(false)}>
@@ -113,7 +189,6 @@ const DetailPage = () => {
             </>
           ) : (
             <>
-              {' '}
               <Button size="small" color="blue" onClick={() => setIsEditBtn(true)}>
                 수정하기
               </Button>
@@ -129,6 +204,7 @@ const DetailPage = () => {
         </Button>
       )}
       {toast && <MediumToast>{currentToastValue}</MediumToast>}
+      {editToast && <MediumToast>{EDIT_MSG}</MediumToast>}
       {deleteInfoToast && <LargeToast handleFunc={handleClickDelete} />}
     </div>
   );
