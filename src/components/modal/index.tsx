@@ -15,7 +15,7 @@ import Portal from './Portal';
 import styles from './modal.module.scss';
 
 const Modal = () => {
-  const [token, ,] = useCookies(['userToken']);
+  const [token, ,] = useCookies(['userId']);
   const [toast, setToast] = useState(false);
   const [errToast, setErrToast] = useState(false);
   const [categoryAtom, setCategoryAtom] = useRecoilState(CateDropDownAtom);
@@ -59,10 +59,10 @@ const Modal = () => {
 
   const [boardInfo, setBoardInfo] = useState({
     Category: '',
-    HeadCount: 0, // TODO 나중에 숫자만 들어가도록 수정
+    HeadCount: 0,
     Title: '',
     Content: '',
-    userId: token.userToken, // userId 구별하도록 토큰값 넣어두기
+    userId: token.userId,
     CurrentCount: 0,
   });
 

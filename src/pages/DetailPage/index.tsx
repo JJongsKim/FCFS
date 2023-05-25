@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import prev from '../../assets/prev.svg';
 import { DeleteInfoToast } from '../../atoms/DeleteInfoToast';
 import Button from '../../components/common/Button';
+import { CateDropDown, NumDropDown } from '../../components/common/Dropdown';
 import { LargeToast, MediumToast } from '../../components/common/Toast';
 import { ACTIVE_MSG, API, DELETE_MSG } from '../../utils/contant';
 
@@ -15,9 +16,10 @@ import styles from './DetailPage.module.scss';
 const DetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [token, ,] = useCookies(['userToken']);
+  const [token, ,] = useCookies(['userId']);
   const { Category, Title, HeadCount, CurrentCount, Content, userId, boardId } = location.state;
   const [toast, setToast] = useState(false);
+  const [isEditBtn, setIsEditBtn] = useState(false);
   const [deleteInfoToast, setDeleteInfoToast] = useRecoilState(DeleteInfoToast);
   const [currentToastValue, setCurrentToastValue] = useState('');
 
@@ -64,33 +66,62 @@ const DetailPage = () => {
         뒤로가기
       </span>
       <div id={styles.topHr} />
-      <section id={styles.firstSection}>
-        <div id={styles.titleText}>
-          카테고리 : <p>{Category}</p>
-        </div>
-        <div id={styles.titleText}>
-          인원 :
-          <p>
-            {CurrentCount}/{HeadCount}
-          </p>
-        </div>
-      </section>
-      <section id={styles.secondSection}>
-        <p id={styles.titleText}>제목</p>
-        <p>{Title}</p>
-      </section>
-      <section id={styles.thirdSection}>
-        <p id={styles.titleText}>내용</p>
-        <div className={styles.detailReadBox}>{Content}</div>
-      </section>
-      {userId === token.userToken ? (
+      <div style={{ width: '100%' }}>
+        <section id={styles.firstSection}>
+          <div id={styles.titleText}>
+            카테고리 :
+            {isEditBtn ? (
+              <span style={{ marginLeft: '5px' }}>
+                <CateDropDown />
+              </span>
+            ) : (
+              <p>{Category}</p>
+            )}
+          </div>
+          <div id={styles.titleText}>
+            인원 :
+            {isEditBtn ? (
+              <span style={{ marginLeft: '5px' }}>
+                <NumDropDown />
+              </span>
+            ) : (
+              <p>
+                {CurrentCount}/{HeadCount}
+              </p>
+            )}
+          </div>
+        </section>
+        <section id={styles.secondSection}>
+          <p id={styles.titleText}>제목</p>
+          <p>{Title}</p>
+        </section>
+        <section id={styles.thirdSection}>
+          <p id={styles.titleText}>내용</p>
+          <div className={styles.detailReadBox}>{Content}</div>
+        </section>
+      </div>
+      {userId === token.userId ? (
         <div className={styles.buttonWrap}>
-          <Button size="small" color="blue">
-            수정하기
-          </Button>
-          <Button size="small" color="blue" onClick={() => setDeleteInfoToast(true)}>
-            삭제하기
-          </Button>
+          {isEditBtn ? (
+            <>
+              <Button size="small" color="blue">
+                수정완료하기
+              </Button>
+              <Button size="small" color="blue" onClick={() => setIsEditBtn(false)}>
+                취소하기
+              </Button>
+            </>
+          ) : (
+            <>
+              {' '}
+              <Button size="small" color="blue" onClick={() => setIsEditBtn(true)}>
+                수정하기
+              </Button>
+              <Button size="small" color="blue" onClick={() => setDeleteInfoToast(true)}>
+                삭제하기
+              </Button>
+            </>
+          )}
         </div>
       ) : (
         <Button size="small" color="blue" onClick={handleClickActive}>
