@@ -9,7 +9,7 @@ import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
 import { MediumToast } from '../../components/common/Toast';
 import Modal from '../../components/modal';
-import { API, LOGIN_INFO_MSG } from '../../utils/contant';
+import { API, COUNT_INFO_MSG, LOGIN_INFO_MSG } from '../../utils/contant';
 
 import styles from './ListPage.module.scss';
 
@@ -22,6 +22,7 @@ const ListPage = () => {
 
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
   const [infoToast, setInfoToast] = useState(false); // 로그인 후 이용 토스트
+  const [countInfoToast, setCountInfoToast] = useState(false); // 참여인원과 총 인원이 같을 때 토스트
   const [clickCate, setClickCate] = useState(false);
   const [clickCateName, setClickCateName] = useState('');
   const handleClickWriteBtn = () => {
@@ -35,6 +36,14 @@ const ListPage = () => {
 
     setTimeout(() => {
       setInfoToast(false);
+    }, 1700);
+  };
+
+  const handleShowCountInfoToast = () => {
+    setCountInfoToast(true);
+
+    setTimeout(() => {
+      setCountInfoToast(false);
     }, 1700);
   };
 
@@ -87,17 +96,23 @@ const ListPage = () => {
           {boards.map(item => (
             <div key={item.boardId} id={styles.items}>
               <p>{item.Category}</p>
-              {token.userToken ? (
-                <Link
-                  to={`/detail-page/${item.boardId}`}
-                  state={{
-                    ...item,
-                  }}
-                >
-                  <p>{item.Title}</p>
-                </Link>
+              {item.CurrentCount === item.HeadCount ? (
+                <p onClick={handleShowCountInfoToast}>{item.Title}</p>
               ) : (
-                <p onClick={handleShowInfoToast}>{item.Title}</p>
+                <>
+                  {token.userToken ? (
+                    <Link
+                      to={`/detail-page/${item.boardId}`}
+                      state={{
+                        ...item,
+                      }}
+                    >
+                      <p>{item.Title}</p>
+                    </Link>
+                  ) : (
+                    <p onClick={handleShowInfoToast}>{item.Title}</p>
+                  )}
+                </>
               )}
               <p>
                 {item.CurrentCount}/{item.HeadCount}
@@ -112,6 +127,7 @@ const ListPage = () => {
         </Button>
         {writeBtn && <Modal />}
         {infoToast && <MediumToast>{LOGIN_INFO_MSG}</MediumToast>}
+        {countInfoToast && <MediumToast>{COUNT_INFO_MSG}</MediumToast>}
       </div>
     </div>
   );
