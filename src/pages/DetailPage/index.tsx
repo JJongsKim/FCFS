@@ -20,6 +20,7 @@ const DetailPage = () => {
   const location = useLocation();
   const [token, ,] = useCookies(['userId']);
   const { Category, Title, HeadCount, CurrentCount, Content, userId, boardId } = location.state;
+
   const [toast, setToast] = useState(false);
   const [editToast, setEditToast] = useState(false);
   const [isEditBtn, setIsEditBtn] = useState(false);
@@ -50,6 +51,7 @@ const DetailPage = () => {
 
   // 수정할 때 따로 변경하지 않는 자료는 그대로 가져가도록
   const [editInfo, setEditInfo] = useState({
+    boardId: boardId,
     Category: Category,
     HeadCount: HeadCount,
     Title: Title,
@@ -58,7 +60,6 @@ const DetailPage = () => {
     CurrentCount: CurrentCount,
   });
 
-  // TODO TextArea 입력하면 전부 잘 바뀌는데, 드롭다운만 수정하면 제대로 적용안됨 수정필요
   const handleChangeTextarea = (name: string, value: string) => {
     setEditInfo(prev => ({
       ...prev,
@@ -70,39 +71,40 @@ const DetailPage = () => {
 
   const handleClickEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    axios
+      .put(`${API}/${boardId}`, {
+        ...editInfo,
+      })
+      .then(res => {
+        if (res.status === 200) {
+          setEditToast(true);
+          setIsEditBtn(false);
+          setCategoryAtom('카테고리');
+          setNumAtom(0);
 
-    setEditToast(true);
-    setIsEditBtn(false);
-    // setCategoryAtom('카테고리');
-    // setNumAtom(0);
-
-    console.log(editInfo);
-
-    setTimeout(() => {
-      setEditToast(false);
-    }, 1700);
-
-    // axios
-    //   .put(`${API}/${boardId}`, {
-    //     ...editInfo,
-    //   })
-    //   .then(res => {
-    //     if (res.status === 200) {
-    //       setEditToast(true);
-    //       setCategoryAtom('카테고리');
-    //       setNumAtom(0);
-
-    //       setTimeout(() => {
-    //         setEditToast(false);
-    //       }, 1700);
-    //     }
-    //   });
+          setTimeout(() => {
+            setEditToast(false);
+          }, 1700);
+        }
+      });
   };
 
   // TODO 참여하기 API 연결
   const handleClickActive = () => {
-    setToast(true);
-    setCurrentToastValue(ACTIVE_MSG);
+    axios
+      .put(`${API}/count/${boardId}`, {
+        CurrentCount,
+      })
+      .then(res => {
+        if (res.status === 200) {
+          setToast(true);
+          setCurrentToastValue(ACTIVE_MSG);
+
+          setTimeout(() => {
+            navigate('/list-page');
+          }, 1700);
+        }
+      });
   };
 
   useEffect(() => {
