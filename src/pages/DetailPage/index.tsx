@@ -82,12 +82,12 @@ const DetailPage = () => {
       .then(res => {
         if (res.status === 200) {
           setEditToast(true);
-          setIsEditBtn(false);
           setCategoryAtom('카테고리');
           setNumAtom(0);
 
           setTimeout(() => {
             setEditToast(false);
+            navigate('/list-page');
           }, 1700);
         }
       });
