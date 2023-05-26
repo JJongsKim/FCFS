@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import './TextArea.scss';
 
 type textAreaProps = {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'editSmall' | 'editLarge';
   type?: 'readOnly'; // 글 조회 페이지에서와 같이 읽기만 가능하도록 할 때 사용
   children?: string;
   value?: string;

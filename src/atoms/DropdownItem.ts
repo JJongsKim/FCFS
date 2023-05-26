@@ -7,5 +7,5 @@ export const CateDropDownAtom = atom({
 
 export const NumDropDownAtom = atom({
   key: 'NumDropDownAtom',
-  default: '인원',
+  default: 0,
 });

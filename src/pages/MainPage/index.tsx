@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -9,7 +11,9 @@ import ott from '../../assets/ott.svg';
 import study from '../../assets/study.svg';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
+import { MediumToast } from '../../components/common/Toast';
 import Modal from '../../components/modal';
+import { LOGIN_INFO_MSG } from '../../utils/contant';
 
 import styles from './MainPage.module.scss';
 
@@ -18,9 +22,21 @@ const categoryNames = ['OTT구독', '원데이클래스', '스터디', '공모�
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const [token, ,] = useCookies(['userToken']);
+  const [infoToast, setInfoToast] = useState(false); // 로그인 후 이용 토스트
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
   const handleClickWriteBtn = () => {
-    setWriteBtn(!writeBtn);
+    {
+      token.userToken ? setWriteBtn(!writeBtn) : handleShowInfoToast();
+    }
+  };
+
+  const handleShowInfoToast = () => {
+    setInfoToast(true);
+
+    setTimeout(() => {
+      setInfoToast(false);
+    }, 1700);
   };
 
   const handleClickCate = (item: string) => {
@@ -71,6 +87,7 @@ const MainPage = () => {
         </Button>
         {writeBtn && <Modal />}
       </section>
+      {infoToast && <MediumToast>{LOGIN_INFO_MSG}</MediumToast>}
     </div>
   );
 };

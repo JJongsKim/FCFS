@@ -1,46 +1,51 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import listBg from '../../assets/listBg.svg';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
+import { MediumToast } from '../../components/common/Toast';
 import Modal from '../../components/modal';
+import { API, COUNT_INFO_MSG, LOGIN_INFO_MSG } from '../../utils/contant';
 
 import styles from './ListPage.module.scss';
 
 const categoryNames = ['OTT구독', '원데이클래스', '스터디', '공모전', '맛집웨이팅', '운동'];
-const mockList = [
-  {
-    id: 1,
-    category: '원데이클래스',
-    title: '바리스타 클래스 둘이 들으실 분?',
-    detail:
-      '요즘 바리스타 자격증에 관심이 생겨 바리스타 클래스를 들어보고 싶은데 관심 있으신 분 있나요? 같이 들으러가요!',
-    num: 0,
-    totalNum: 2,
-    isAdmin: false,
-  },
-  {
-    id: 2,
-    category: '공모전',
-    title: '한이음 AI 프로젝트 나가실 분 구합니다!',
-    detail:
-      'AI공부 중인 학생입니다. 환경 주제에 관심이 생겨 참가하고자 합니다. 팀원은 총 3분 구합니다. 많은 관심과 참여부탁합니다~',
-    num: 1,
-    totalNum: 3,
-    isAdmin: true,
-  },
-];
 
 const ListPage = () => {
   const { state } = useLocation();
+  const [token, ,] = useCookies(['userToken']);
+  const [boards, setBoards] = useState<getBoardType[]>([]);
+  const [cateBoards, setCateBoards] = useState<getBoardType[]>([]);
 
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
+  const [infoToast, setInfoToast] = useState(false); // 로그인 후 이용 토스트
+  const [countInfoToast, setCountInfoToast] = useState(false); // 참여인원과 총 인원이 같을 때 토스트
   const [clickCate, setClickCate] = useState(false);
   const [clickCateName, setClickCateName] = useState('');
   const handleClickWriteBtn = () => {
-    setWriteBtn(!writeBtn);
+    {
+      token.userToken ? setWriteBtn(!writeBtn) : handleShowInfoToast();
+    }
+  };
+
+  const handleShowInfoToast = () => {
+    setInfoToast(true);
+
+    setTimeout(() => {
+      setInfoToast(false);
+    }, 1700);
+  };
+
+  const handleShowCountInfoToast = () => {
+    setCountInfoToast(true);
+
+    setTimeout(() => {
+      setCountInfoToast(false);
+    }, 1700);
   };
 
   const handleClickCate = (cateName: string) => {
@@ -53,12 +58,32 @@ const ListPage = () => {
     }
   };
 
+  const handleDivideCategory = (boards: getBoardType[]) => {
+    const filterCategory = boards.filter(item => item.Category === clickCateName).map(item => item);
+    setCateBoards(filterCategory);
+  };
+
+  const showBoards = () => {
+    axios.get(`${API}/title`).then(res => {
+      setBoards(res.data);
+    });
+  };
+
   useEffect(() => {
     if (state !== null && state) {
       setClickCate(true);
       setClickCateName(state);
     }
+    showBoards();
   }, []);
+
+  useEffect(() => {
+    if (clickCateName !== '') {
+      handleDivideCategory(boards);
+    } else {
+      showBoards();
+    }
+  }, [clickCateName]);
 
   return (
     <div className={styles.pageWrap}>
@@ -82,22 +107,65 @@ const ListPage = () => {
           <p>인원</p>
         </div>
         <div id={styles.listItem}>
-          {mockList.map(item => (
-            <div key={item.id} id={styles.items}>
-              <p>{item.category}</p>
-              <Link
-                to={`/detail-page/${item.id}`}
-                state={{
-                  ...item,
-                }}
-              >
-                <p>{item.title}</p>
-              </Link>
-              <p>
-                {item.num}/{item.totalNum}
-              </p>
-            </div>
-          ))}
+          {cateBoards && clickCateName ? (
+            <>
+              {cateBoards.map(item => (
+                <div key={item.boardId} id={styles.items}>
+                  <p>{item.Category}</p>
+                  {item.CurrentCount === item.HeadCount ? (
+                    <p onClick={handleShowCountInfoToast}>{item.Title}</p>
+                  ) : (
+                    <>
+                      {token.userToken ? (
+                        <Link
+                          to={`/detail-page/${item.boardId}`}
+                          state={{
+                            ...item,
+                          }}
+                        >
+                          <p>{item.Title}</p>
+                        </Link>
+                      ) : (
+                        <p onClick={handleShowInfoToast}>{item.Title}</p>
+                      )}
+                    </>
+                  )}
+                  <p>
+                    {item.CurrentCount}/{item.HeadCount}
+                  </p>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {boards.map(item => (
+                <div key={item.boardId} id={styles.items}>
+                  <p>{item.Category}</p>
+                  {item.CurrentCount === item.HeadCount ? (
+                    <p onClick={handleShowCountInfoToast}>{item.Title}</p>
+                  ) : (
+                    <>
+                      {token.userToken ? (
+                        <Link
+                          to={`/detail-page/${item.boardId}`}
+                          state={{
+                            ...item,
+                          }}
+                        >
+                          <p>{item.Title}</p>
+                        </Link>
+                      ) : (
+                        <p onClick={handleShowInfoToast}>{item.Title}</p>
+                      )}
+                    </>
+                  )}
+                  <p>
+                    {item.CurrentCount}/{item.HeadCount}
+                  </p>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </section>
       <div id={styles.listBtn}>
@@ -105,6 +173,8 @@ const ListPage = () => {
           글 쓰러가기
         </Button>
         {writeBtn && <Modal />}
+        {infoToast && <MediumToast>{LOGIN_INFO_MSG}</MediumToast>}
+        {countInfoToast && <MediumToast>{COUNT_INFO_MSG}</MediumToast>}
       </div>
     </div>
   );

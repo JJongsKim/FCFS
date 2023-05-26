@@ -12,7 +12,7 @@ import styles from './Login.module.scss';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [, setCookie] = useCookies(['userToken']);
+  const [, setCookie] = useCookies(['userToken', 'userId']);
   const [toast, setToast] = useState(false);
   const [errToast, setErrToast] = useState(false);
   const [loginErrToast, setLoginErrToast] = useState(false);
@@ -37,6 +37,7 @@ const Login = () => {
             // 성공적으로 로그인 시 메인페이지로 이동
             setToast(true);
             setCookie('userToken', res.data.AccessToken);
+            setCookie('userId', res.data.userId);
 
             setTimeout(() => {
               navigate('/');
