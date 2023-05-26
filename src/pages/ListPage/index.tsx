@@ -57,6 +57,11 @@ const ListPage = () => {
     }
   };
 
+  const handleDivideCategory = (boards: getBoardType[]) => {
+    const filterCategory = boards.filter(item => item.Category === clickCateName).map(item => item);
+    setBoards(filterCategory);
+  };
+
   const showBoards = () => {
     axios.get(`${API}/title`).then(res => {
       setBoards(res.data);
@@ -70,6 +75,15 @@ const ListPage = () => {
     }
     showBoards();
   }, []);
+
+  // TODO 카테고리 -> 다른 카테고리로 변환시 잘 보이도록 수정필요
+  useEffect(() => {
+    if (clickCateName !== '') {
+      handleDivideCategory(boards);
+    } else {
+      showBoards();
+    }
+  }, [clickCate, clickCateName]);
 
   return (
     <div className={styles.pageWrap}>

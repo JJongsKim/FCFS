@@ -93,7 +93,6 @@ const DetailPage = () => {
       });
   };
 
-  // TODO 참여하기 API 연결
   const handleClickActive = () => {
     const countUserArray = JSON.parse(CountUser);
 
