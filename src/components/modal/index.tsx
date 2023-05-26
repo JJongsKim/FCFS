@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { CateDropDownAtom, NumDropDownAtom } from '../../atoms/DropdownItem';
+import { ListPageUpdate } from '../../atoms/ListPageUpdate';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import { API, ERR_MSG, UPLOAD_MSG } from '../../utils/contant';
 import Button from '../common/Button';
@@ -18,6 +19,7 @@ const Modal = () => {
   const [token, ,] = useCookies(['userId']);
   const [toast, setToast] = useState(false);
   const [errToast, setErrToast] = useState(false);
+  const updateListPage = useSetRecoilState(ListPageUpdate);
   const [categoryAtom, setCategoryAtom] = useRecoilState(CateDropDownAtom);
   const [numAtom, setNumAtom] = useRecoilState(NumDropDownAtom);
   const setWriteBtn = useSetRecoilState(WriteBtnAtom);
@@ -48,6 +50,7 @@ const Modal = () => {
             setToast(true);
             setCategoryAtom('카테고리');
             setNumAtom(0);
+            updateListPage(true);
 
             setTimeout(() => {
               setWriteBtn(false);

@@ -2,9 +2,10 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link, useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import listBg from '../../assets/listBg.svg';
+import { ListPageUpdate } from '../../atoms/ListPageUpdate';
 import { WriteBtnAtom } from '../../atoms/WriteBtnAtom';
 import Button from '../../components/common/Button';
 import { MediumToast } from '../../components/common/Toast';
@@ -21,6 +22,7 @@ const ListPage = () => {
   const [boards, setBoards] = useState<getBoardType[]>([]);
   const [cateBoards, setCateBoards] = useState<getBoardType[]>([]);
 
+  const updateListPage = useRecoilValue(ListPageUpdate);
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
   const [infoToast, setInfoToast] = useState(false); // 로그인 후 이용 토스트
   const [countInfoToast, setCountInfoToast] = useState(false); // 참여인원과 총 인원이 같을 때 토스트
@@ -76,7 +78,7 @@ const ListPage = () => {
     }
 
     showBoards();
-  }, []);
+  }, [updateListPage]);
 
   useEffect(() => {
     if (clickCateName !== '') {
