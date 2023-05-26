@@ -11,7 +11,7 @@ import Button from '../../components/common/Button';
 import { CateDropDown, NumDropDown } from '../../components/common/Dropdown';
 import TextArea from '../../components/common/TextArea';
 import { LargeToast, MediumToast } from '../../components/common/Toast';
-import { ACTIVE_MSG, API, DELETE_MSG, EDIT_MSG } from '../../utils/contant';
+import { ACTIVE_MSG, ALREADY_ACTIVE_MSG, API, DELETE_MSG, EDIT_MSG } from '../../utils/contant';
 
 import styles from './DetailPage.module.scss';
 
@@ -19,10 +19,13 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [token, ,] = useCookies(['userId']);
-  const { Category, Title, HeadCount, CurrentCount, Content, userId, boardId } = location.state;
+  const { Category, Title, HeadCount, CurrentCount, Content, userId, boardId, CountUser } =
+    location.state;
 
+  const user = token.userId;
   const [toast, setToast] = useState(false);
   const [editToast, setEditToast] = useState(false);
+  const [alreadyToast, setAlreadyToast] = useState(false);
   const [isEditBtn, setIsEditBtn] = useState(false);
   const [deleteInfoToast, setDeleteInfoToast] = useRecoilState(DeleteInfoToast);
   const [categoryAtom, setCategoryAtom] = useRecoilState(CateDropDownAtom);
@@ -58,6 +61,7 @@ const DetailPage = () => {
     Content: Content,
     userId: token.userId,
     CurrentCount: CurrentCount,
+    CountUser: CountUser,
   });
 
   const handleChangeTextarea = (name: string, value: string) => {
@@ -91,21 +95,30 @@ const DetailPage = () => {
 
   // TODO 참여하기 API 연결
   const handleClickActive = () => {
-    axios
-      .put(`${API}/count/${boardId}`, {
-        CurrentCount,
-        userId,
-      })
-      .then(res => {
-        if (res.status === 200) {
-          setToast(true);
-          setCurrentToastValue(ACTIVE_MSG);
+    const countUserArray = JSON.parse(CountUser);
 
-          setTimeout(() => {
-            navigate('/list-page');
-          }, 1700);
-        }
-      });
+    if (!countUserArray.includes(token.userId)) {
+      axios
+        .put(`${API}/count/${boardId}`, {
+          CurrentCount,
+          user, // 참여하기를 누르는 글쓴이 제외 아이디
+        })
+        .then(res => {
+          if (res.status === 200) {
+            setToast(true);
+            setCurrentToastValue(ACTIVE_MSG);
+            setTimeout(() => {
+              navigate('/list-page');
+            }, 1700);
+          }
+        });
+    } else {
+      setAlreadyToast(true);
+
+      setTimeout(() => {
+        setAlreadyToast(false);
+      }, 1700);
+    }
   };
 
   useEffect(() => {
@@ -208,6 +221,7 @@ const DetailPage = () => {
       )}
       {toast && <MediumToast>{currentToastValue}</MediumToast>}
       {editToast && <MediumToast>{EDIT_MSG}</MediumToast>}
+      {alreadyToast && <MediumToast>{ALREADY_ACTIVE_MSG}</MediumToast>}
       {deleteInfoToast && <LargeToast handleFunc={handleClickDelete} />}
     </div>
   );
