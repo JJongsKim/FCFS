@@ -40,7 +40,6 @@ const MainPage = () => {
   };
 
   const handleClickCate = (item: string) => {
-    // TODO 나중에 arg 받아와서 카테고리에 따라 달라지도록 수정하기
     navigate('/list-page', {
       state: item,
     });

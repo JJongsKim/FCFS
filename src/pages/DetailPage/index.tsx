@@ -82,19 +82,19 @@ const DetailPage = () => {
       .then(res => {
         if (res.status === 200) {
           setEditToast(true);
-          setIsEditBtn(false);
           setCategoryAtom('카테고리');
           setNumAtom(0);
 
           setTimeout(() => {
             setEditToast(false);
+            navigate('/list-page');
           }, 1700);
         }
       });
   };
 
   const handleClickActive = () => {
-    const countUserArray = JSON.parse(CountUser);
+    const countUserArray = CountUser === null ? [] : JSON.parse(CountUser);
 
     if (!countUserArray.includes(token.userId)) {
       axios
