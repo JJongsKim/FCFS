@@ -19,6 +19,7 @@ const ListPage = () => {
   const { state } = useLocation();
   const [token, ,] = useCookies(['userToken']);
   const [boards, setBoards] = useState<getBoardType[]>([]);
+  const [cateBoards, setCateBoards] = useState<getBoardType[]>([]);
 
   const [writeBtn, setWriteBtn] = useRecoilState(WriteBtnAtom);
   const [infoToast, setInfoToast] = useState(false); // 로그인 후 이용 토스트
@@ -59,7 +60,7 @@ const ListPage = () => {
 
   const handleDivideCategory = (boards: getBoardType[]) => {
     const filterCategory = boards.filter(item => item.Category === clickCateName).map(item => item);
-    setBoards(filterCategory);
+    setCateBoards(filterCategory);
   };
 
   const showBoards = () => {
@@ -76,14 +77,13 @@ const ListPage = () => {
     showBoards();
   }, []);
 
-  // TODO 카테고리 -> 다른 카테고리로 변환시 잘 보이도록 수정필요
   useEffect(() => {
     if (clickCateName !== '') {
       handleDivideCategory(boards);
     } else {
       showBoards();
     }
-  }, [clickCate, clickCateName]);
+  }, [clickCateName]);
 
   return (
     <div className={styles.pageWrap}>
@@ -107,32 +107,65 @@ const ListPage = () => {
           <p>인원</p>
         </div>
         <div id={styles.listItem}>
-          {boards.map(item => (
-            <div key={item.boardId} id={styles.items}>
-              <p>{item.Category}</p>
-              {item.CurrentCount === item.HeadCount ? (
-                <p onClick={handleShowCountInfoToast}>{item.Title}</p>
-              ) : (
-                <>
-                  {token.userToken ? (
-                    <Link
-                      to={`/detail-page/${item.boardId}`}
-                      state={{
-                        ...item,
-                      }}
-                    >
-                      <p>{item.Title}</p>
-                    </Link>
+          {cateBoards && clickCateName ? (
+            <>
+              {cateBoards.map(item => (
+                <div key={item.boardId} id={styles.items}>
+                  <p>{item.Category}</p>
+                  {item.CurrentCount === item.HeadCount ? (
+                    <p onClick={handleShowCountInfoToast}>{item.Title}</p>
                   ) : (
-                    <p onClick={handleShowInfoToast}>{item.Title}</p>
+                    <>
+                      {token.userToken ? (
+                        <Link
+                          to={`/detail-page/${item.boardId}`}
+                          state={{
+                            ...item,
+                          }}
+                        >
+                          <p>{item.Title}</p>
+                        </Link>
+                      ) : (
+                        <p onClick={handleShowInfoToast}>{item.Title}</p>
+                      )}
+                    </>
                   )}
-                </>
-              )}
-              <p>
-                {item.CurrentCount}/{item.HeadCount}
-              </p>
-            </div>
-          ))}
+                  <p>
+                    {item.CurrentCount}/{item.HeadCount}
+                  </p>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {boards.map(item => (
+                <div key={item.boardId} id={styles.items}>
+                  <p>{item.Category}</p>
+                  {item.CurrentCount === item.HeadCount ? (
+                    <p onClick={handleShowCountInfoToast}>{item.Title}</p>
+                  ) : (
+                    <>
+                      {token.userToken ? (
+                        <Link
+                          to={`/detail-page/${item.boardId}`}
+                          state={{
+                            ...item,
+                          }}
+                        >
+                          <p>{item.Title}</p>
+                        </Link>
+                      ) : (
+                        <p onClick={handleShowInfoToast}>{item.Title}</p>
+                      )}
+                    </>
+                  )}
+                  <p>
+                    {item.CurrentCount}/{item.HeadCount}
+                  </p>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </section>
       <div id={styles.listBtn}>
