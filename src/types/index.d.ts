@@ -6,4 +6,5 @@ interface getBoardType {
   CurrentCount: number;
   HeadCount: number;
   userId: string;
+  CountUser: strint[];
 }

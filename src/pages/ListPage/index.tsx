@@ -60,6 +60,7 @@ const ListPage = () => {
   const showBoards = () => {
     axios.get(`${API}/title`).then(res => {
       setBoards(res.data);
+      console.log(res.data);
     });
   };
 

@@ -94,6 +94,7 @@ const DetailPage = () => {
     axios
       .put(`${API}/count/${boardId}`, {
         CurrentCount,
+        userId,
       })
       .then(res => {
         if (res.status === 200) {
