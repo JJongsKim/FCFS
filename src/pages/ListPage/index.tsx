@@ -74,6 +74,7 @@ const ListPage = () => {
       setClickCate(true);
       setClickCateName(state);
     }
+
     showBoards();
   }, []);
 
@@ -81,9 +82,9 @@ const ListPage = () => {
     if (clickCateName !== '') {
       handleDivideCategory(boards);
     } else {
-      showBoards();
+      handleDivideCategory(boards);
     }
-  }, [clickCateName]);
+  }, [clickCateName, boards]);
 
   return (
     <div className={styles.pageWrap}>
