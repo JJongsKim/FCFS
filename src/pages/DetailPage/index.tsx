@@ -94,7 +94,7 @@ const DetailPage = () => {
   };
 
   const handleClickActive = () => {
-    const countUserArray = JSON.parse(CountUser);
+    const countUserArray = CountUser === null ? [] : JSON.parse(CountUser);
 
     if (!countUserArray.includes(token.userId)) {
       axios
