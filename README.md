@@ -62,3 +62,7 @@
 ### 🍑선착순 팀원🍑
 <img width="1224" alt="스크린샷 2023-05-27 오후 8 31 36" src="https://github.com/JJongsKim/FCFS-front/assets/81777778/fd79af3f-dde7-4ce7-a972-1cad2ddc4d1f">
 
+---
+### 선착순의 백엔드가 궁금하신가요?
+[바로가기](https://github.com/JJongsKim/FCFS-server)
+
