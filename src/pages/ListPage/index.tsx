@@ -62,9 +62,7 @@ const ListPage = () => {
 
   const handleDivideCategory = (boards: getBoardType[]) => {
     if (boards && Array.isArray(boards) && boards.length > 0) {
-      const filterCategory = boards
-        .filter(item => item.Category === clickCateName)
-        .map(item => item);
+      const filterCategory = boards.filter(item => item.Category === clickCateName);
       setCateBoards(filterCategory);
     } else {
       setCateBoards([]);
