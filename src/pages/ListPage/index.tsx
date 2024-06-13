@@ -61,8 +61,6 @@ const ListPage = () => {
   };
 
   const handleDivideCategory = (boards: getBoardType[]) => {
-    console.log(boards);
-
     if (boards && boards !== undefined) {
       const filterCategory = boards
         .filter(item => item.Category === clickCateName)
