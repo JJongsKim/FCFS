@@ -61,11 +61,13 @@ const ListPage = () => {
   };
 
   const handleDivideCategory = (boards: getBoardType[]) => {
-    if (boards && boards !== undefined) {
+    if (boards && Array.isArray(boards) && boards.length > 0) {
       const filterCategory = boards
         .filter(item => item.Category === clickCateName)
         .map(item => item);
       setCateBoards(filterCategory);
+    } else {
+      setCateBoards([]);
     }
   };
 
