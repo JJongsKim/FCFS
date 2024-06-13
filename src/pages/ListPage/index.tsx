@@ -81,9 +81,7 @@ const ListPage = () => {
   }, [updateListPage]);
 
   useEffect(() => {
-    if (clickCateName !== '') {
-      handleDivideCategory(boards);
-    } else {
+    if (clickCateName !== '' && boards !== undefined) {
       handleDivideCategory(boards);
     }
   }, [clickCateName, boards]);
