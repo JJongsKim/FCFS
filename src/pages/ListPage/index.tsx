@@ -61,8 +61,14 @@ const ListPage = () => {
   };
 
   const handleDivideCategory = (boards: getBoardType[]) => {
-    const filterCategory = boards.filter(item => item.Category === clickCateName).map(item => item);
-    setCateBoards(filterCategory);
+    console.log(boards);
+
+    if (boards && boards !== undefined) {
+      const filterCategory = boards
+        .filter(item => item.Category === clickCateName)
+        .map(item => item);
+      setCateBoards(filterCategory);
+    }
   };
 
   const showBoards = () => {
@@ -81,7 +87,7 @@ const ListPage = () => {
   }, [updateListPage]);
 
   useEffect(() => {
-    if (clickCateName !== '' && boards !== undefined) {
+    if (clickCateName !== '') {
       handleDivideCategory(boards);
     }
   }, [clickCateName, boards]);
